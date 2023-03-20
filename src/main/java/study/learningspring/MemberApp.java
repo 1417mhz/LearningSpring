@@ -12,6 +12,8 @@ public class MemberApp {
 //        AppConfig appConfig = new AppConfig();
 //        MemberService memberService = appConfig.memberService();
 
+        // ApplicationContext를 스프링 컨테이너라 하고, 이것은 인터페이스다.
+        // AnnotationConfigApplicationContext 는 ApplicationContext의 구현체이다.
         // AppConfig에 있는 설정 정보를 가져다 사용할 수 있도록 해줌
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         // .getBean(빈 이름, 타입.class)
