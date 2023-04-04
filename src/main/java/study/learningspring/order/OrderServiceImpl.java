@@ -1,5 +1,6 @@
 package study.learningspring.order;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import study.learningspring.discount.DiscountPolicy;
@@ -10,10 +11,19 @@ import study.learningspring.member.MemberRepository;
 import study.learningspring.member.MemoryMemberRepository;
 
 @Component
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
+    // Lombok 라이브러리가 final 키워드가 붙은 필드들을 모아서 생성자를 자동으로 만들어준다
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+
+    // 생성자 주입
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     // 필드 주입
     // 코드가 간결하다는 장점이 있으나 DI 프레임워크(스프링)이 없으면 아무것도 할 수 없다는 단점이 있다.
@@ -31,12 +41,6 @@ public class OrderServiceImpl implements OrderService {
 //    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
 //        this.discountPolicy = discountPolicy;
 //    }
-
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
