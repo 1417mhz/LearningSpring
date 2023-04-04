@@ -2,7 +2,9 @@ package study.learningspring.order;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import study.learningspring.annotation.MainDiscountPolicy;
 import study.learningspring.discount.DiscountPolicy;
 import study.learningspring.discount.FixDiscountPolicy;
 import study.learningspring.discount.RateDiscountPolicy;
@@ -11,7 +13,7 @@ import study.learningspring.member.MemberRepository;
 import study.learningspring.member.MemoryMemberRepository;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     // Lombok 라이브러리가 final 키워드가 붙은 필드들을 모아서 생성자를 자동으로 만들어준다
@@ -19,11 +21,13 @@ public class OrderServiceImpl implements OrderService {
     private final DiscountPolicy discountPolicy;
 
     // 생성자 주입
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired
+    // 동일한 타입의 빈이 2개 이상 등록되었을 경우 특정 빈을 주입 받기위해 조건을 부여한다 (@Qualifier)
+    // 사용자가 직접 생성한 어노테이션으로 사용할 빈 직접 선택 (@MainDiscountPolicy)
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     // 필드 주입
     // 코드가 간결하다는 장점이 있으나 DI 프레임워크(스프링)이 없으면 아무것도 할 수 없다는 단점이 있다.
