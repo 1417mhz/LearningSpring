@@ -22,8 +22,9 @@ public class BeanLifeCycleTest {
 
         @Bean
         public NetworkClient networkClient() {
+            // NetworkClient 생성자 호출 -> .setUrl -> NetworkClient 빈 인스턴스 리턴 및 빈 등록 -> init 호출 (초기화)
             NetworkClient networkClient = new NetworkClient();
-            networkClient.setUrl("http://hello-spring.dev");
+            networkClient.setUrl("http://hello-spring.dev"); // setUrl 은 빈 등록의 과정 속에서 동작한다
             return networkClient;
         }
 
